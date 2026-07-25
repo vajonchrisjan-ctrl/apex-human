@@ -7,14 +7,17 @@ export default function DashboardLive({
   initialAgents,
   initialCenterNumber,
   initialFeed,
+  initialCenterImageUrl,
 }: {
   initialAgents: OrbitAgentData[];
   initialCenterNumber: number;
   initialFeed: string[];
+  initialCenterImageUrl: string | null;
 }) {
   const [agents, setAgents] = useState(initialAgents);
   const [centerNumber, setCenterNumber] = useState(initialCenterNumber);
   const [feed, setFeed] = useState(initialFeed);
+  const [centerImageUrl, setCenterImageUrl] = useState(initialCenterImageUrl);
 
   useEffect(() => {
     let cancelled = false;
@@ -28,6 +31,7 @@ export default function DashboardLive({
         setAgents(data.agents ?? []);
         setCenterNumber(data.centerNumber ?? 0);
         setFeed(data.activityFeed ?? []);
+        setCenterImageUrl(data.centerImageUrl ?? null);
       } catch {
         // ignore transient poll failures
       }
@@ -45,6 +49,7 @@ export default function DashboardLive({
       agents={agents}
       centerNumber={centerNumber}
       centerLabel="brands worked this month"
+      centerImageUrl={centerImageUrl}
       activityFeed={feed}
     />
   );

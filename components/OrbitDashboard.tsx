@@ -38,11 +38,13 @@ export default function OrbitDashboard({
   activityFeed = DEFAULT_ACTIVITY_FEED,
   centerNumber = "12",
   centerLabel = "brands this month",
+  centerImageUrl,
 }: {
   agents: OrbitAgentData[];
   activityFeed?: string[];
   centerNumber?: string | number;
   centerLabel?: string;
+  centerImageUrl?: string | null;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -156,8 +158,14 @@ export default function OrbitDashboard({
               <div className="orbit-center-pulse" />
               <div className="orbit-center-pulse orbit-center-pulse-delay" />
               <div className="orbit-center-core">
-                <span className="orbit-center-number">{centerNumber}</span>
-                <span className="orbit-center-label">{centerLabel}</span>
+                {centerImageUrl ? (
+                  <img src={centerImageUrl} alt="" className="orbit-center-photo" />
+                ) : (
+                  <>
+                    <span className="orbit-center-number">{centerNumber}</span>
+                    <span className="orbit-center-label">{centerLabel}</span>
+                  </>
+                )}
               </div>
             </div>
           </div>

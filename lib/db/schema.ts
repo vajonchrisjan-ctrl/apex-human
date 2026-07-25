@@ -232,3 +232,25 @@ export const messages = pgTable("messages", {
     .notNull()
     .defaultNow(),
 });
+
+export const socialAccounts = pgTable(
+  "social_accounts",
+  {
+    userId: text("user_id").notNull(),
+    provider: text("provider").notNull(),
+    openId: text("open_id"),
+    username: text("username"),
+    displayName: text("display_name"),
+    avatarUrl: text("avatar_url"),
+    refreshToken: text("refresh_token"),
+    scope: text("scope"),
+    snapshot: jsonb("snapshot"),
+    needsReconnect: boolean("needs_reconnect").notNull().default(false),
+    connectedAt: timestamp("connected_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.userId, table.provider] }),
+  })
+);

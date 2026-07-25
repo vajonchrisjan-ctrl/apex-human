@@ -3,6 +3,7 @@ import { and, desc, eq, gte } from "drizzle-orm";
 import { getDb, isDbConfigured } from "@/lib/db";
 import { jobs, leads, activity } from "@/lib/db/schema";
 import { listAgents } from "@/lib/agents/store";
+import { getSocialAccount } from "@/lib/social/store";
 import type { OrbitAgentData } from "@/components/OrbitDashboard";
 
 const WORKED_ACTIVITY_TYPES = new Set([
@@ -23,6 +24,7 @@ export interface DashboardLiveData {
   agents: OrbitAgentData[];
   centerNumber: number;
   activityFeed: string[];
+  centerImageUrl: string | null;
 }
 
 export async function getDashboardLiveData(userId: string): Promise<DashboardLiveData> {
@@ -41,6 +43,7 @@ export async function getDashboardLiveData(userId: string): Promise<DashboardLiv
       })),
       centerNumber: 0,
       activityFeed: [],
+      centerImageUrl: null,
     };
   }
 
@@ -140,9 +143,12 @@ export async function getDashboardLiveData(userId: string): Promise<DashboardLiv
     };
   });
 
+  const tiktok = await getSocialAccount(userId, "tiktok");
+
   return {
     agents,
     centerNumber: brandsWorkedThisMonth,
     activityFeed: feedRows.map((r) => r.text),
+    centerImageUrl: tiktok?.avatarUrl ?? null,
   };
 }

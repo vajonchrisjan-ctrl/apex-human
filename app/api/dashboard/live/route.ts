@@ -7,7 +7,7 @@ import { getDashboardLiveData } from "@/lib/dashboard/liveData";
 export async function GET() {
   const { userId } = await auth();
   if (!userId) {
-    return NextResponse.json({ agents: [], centerNumber: 0, activityFeed: [] });
+    return NextResponse.json({ agents: [], centerNumber: 0, activityFeed: [], centerImageUrl: null });
   }
   const data = await getDashboardLiveData(userId);
   return NextResponse.json(data);
