@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "mcp__Lovable__read_file"
+      "mcp__Lovable__read_file",
+      "mcp__Lovable__list_files",
+      "mcp__Lovable__get_project"
     ]
   }
 }
